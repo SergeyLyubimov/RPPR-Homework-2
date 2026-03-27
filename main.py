@@ -12,7 +12,7 @@ class UserRegistration(BaseModel):
     age: int = Field(ge=18, le=120)
     registration_date: date = Field(default_factory=date.today)
     full_name: str = Field(min_length=2)
-    phone_number: str = Field(min_length=12, max_length=12)
+    phone: str = Field(min_length=12, max_length=12)
 
     @field_validator('username')
     @classmethod
@@ -36,9 +36,9 @@ class UserRegistration(BaseModel):
             raise ValueError('Full name must start with a capital letter')
         return value
 
-    @field_validator('phone_number')
+    @field_validator('phone')
     @classmethod
-    def validate_phone_number(cls, value):
+    def validate_phone(cls, value):
         if not re.fullmatch(r'[+]\d-\d{3}-\d{2}-\d{2}', value):
             raise ValueError('Phone number must be entered in the format: +X-XXX-XX-XX')
         return value
